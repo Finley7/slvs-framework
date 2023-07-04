@@ -1,0 +1,25 @@
+@model SLVS.DTO.User.Login
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Login</h2>
+<div class="row">
+    <div class="col">
+        <form asp-action="Login">
+            <div class="form-group">
+                <label asp-for="Lettercode">Lettercode</label>
+                <input type="text" asp-for="Lettercode" class="form-control">
+                <span asp-validation-for="Lettercode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Wachtwoord</label>
+                <input type="password" asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-success">Login</button>
+        </form>
+    </div>
+</div>
