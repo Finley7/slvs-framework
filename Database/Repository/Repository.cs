@@ -6,7 +6,7 @@ public class Repository : IRepository
 {
     protected readonly SlvsContext Db;
 
-    public Repository(SlvsContext db)
+    protected Repository(SlvsContext db)
     {
         Db = db;
     }

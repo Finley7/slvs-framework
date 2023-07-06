@@ -23,4 +23,27 @@ public class AuthenticationManager : IAuthenticationManager
         _context?.Session.SetString("User", userStr);
         _context?.Session.SetString("LoggedInTime", DateTime.Now.ToString(CultureInfo.CurrentCulture));
     }
+
+    public void DestroyUser()
+    {
+        _context?.Session.SetString("LastKnownUsername", GetUser().Lettercode);
+        _context?.Session.Remove("User");
+        _context?.Session.Remove("LoggedInTime");
+        _context?.Session.SetString("LastLogin", DateTime.Now.ToString(CultureInfo.CurrentCulture));
+    }
+
+    public string? LastLoginName()
+    {
+        return _context?.Session.GetString("LastKnownUsername");
+    }
+
+    public DateTime? PreviousSessionTime()
+    {
+        return DateTime.Parse(_context?.Session.GetString("LastLogin") ?? string.Empty);
+    }
+
+    public DateTime? LastLogin()
+    {
+        return DateTime.Parse(_context?.Session.GetString("LoggedInTime") ?? string.Empty);
+    }
 }
