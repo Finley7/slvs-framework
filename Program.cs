@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SLVS;
+using SLVS.Authentication.Manager;
 using SLVS.Database.Repository.User;
 using SLVS.Middleware;
 
@@ -15,8 +16,14 @@ builder.Services.AddDbContext<SlvsContext>(optionsBuilder =>
     optionsBuilder.UseMySql(cs, ServerVersion.Parse("5.7.39"))
         .LogTo(Console.WriteLine, LogLevel.Warning);
 });
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddFlashes();
 
 builder.Services.AddSession(options =>
 {
@@ -25,8 +32,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

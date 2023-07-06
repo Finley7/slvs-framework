@@ -29,7 +29,7 @@ public class SlvsAuthentication
 
         // Call the HandleTask function from the attribute
         attr?.HandleTask(context, user);
-        _logger.Log(LogLevel.Information, $"Called attribute {attr?.GetType().ToString()} with user {user.Lettercode}");
+        _logger.Log(LogLevel.Information, $"Called attribute {attr?.GetType()} with user {user.Lettercode}");
 
         // Call the next delegate/middleware in the pipeline.
         await _next(context);

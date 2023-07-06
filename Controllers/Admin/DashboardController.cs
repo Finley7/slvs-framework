@@ -4,7 +4,7 @@ using SLVS.Authentication.Attribute;
 namespace SLVS.Controllers.Admin;
 
 [IsLoggedIn]
-public class DashboardController : Controller
+public class DashboardController : SlvsController
 {
     public IActionResult Index()
     {

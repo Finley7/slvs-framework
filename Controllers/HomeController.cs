@@ -2,7 +2,7 @@
 
 namespace SLVS.Controllers;
 
-public class HomeController : Controller
+public class HomeController : SlvsController
 {
     private readonly ILogger<HomeController> _logger;
 

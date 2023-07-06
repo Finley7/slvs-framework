@@ -1,3 +1,5 @@
+@inject IAuthenticationManager AuthenticationManager
+@using SLVS.Authentication.Manager
 @model dynamic
 
 @{
@@ -6,3 +8,4 @@
 }
 
 <h2>Admin dashboard</h2>
+<p>Welkom @AuthenticationManager.GetUser().Lettercode</p>

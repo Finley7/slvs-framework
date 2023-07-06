@@ -1,13 +1,14 @@
+using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SLVS.Authentication.Attribute;
 using SLVS.Database.Repository.User;
 using SLVS.DTO.User;
+using SLVS.Exceptions;
 
 namespace SLVS.Controllers.Security;
 
 [IsGuest]
-public class LoginController : Controller
+public class LoginController : SlvsController
 {
     private readonly IUserRepository _userRepository;
 
@@ -24,8 +25,16 @@ public class LoginController : Controller
     [HttpPost]
     public RedirectResult Login(Login login)
     {
-        var user = _userRepository.Login(login.Lettercode, login.Password);
-        HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
+        try
+        {
+            var user = _userRepository.Login(login.Lettercode, login.Password);
+            AuthenticationManager.SetUser(user);
+        }
+        catch (UserNotFoundException e)
+        {
+            Flasher.Danger("Invalid credentials provided");
+            return new RedirectResult("/Login");
+        }
 
         return new RedirectResult("/Dashboard");
     }
