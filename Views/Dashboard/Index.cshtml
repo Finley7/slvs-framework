@@ -1,5 +1,7 @@
 @inject IAuthenticationManager AuthenticationManager
-@using SLVS.Authentication.Manager
+@inject IAuthorizationManager AuthorizationManager
+@using SLVS.Security.Manager.Authentication
+@using SLVS.Security.Manager.Authorization
 @model dynamic
 
 @{
@@ -9,3 +11,8 @@
 
 <h2>Admin dashboard</h2>
 <p>Welkom @AuthenticationManager.GetUser().Lettercode</p>
+
+@if (AuthorizationManager.IsAuthorized("test_permission"))
+{
+    <h1>Deze mag alleen jij zien!</h1>
+}

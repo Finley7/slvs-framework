@@ -1,8 +1,8 @@
 using SLVS.Database.Model;
 
-namespace SLVS.Authentication.Attribute;
+namespace SLVS.Security.Attribute.Authentication;
 
-public class SlvsAttribute : System.Attribute
+public abstract class SlvsAttribute : System.Attribute
 {
     public virtual void HandleTask(HttpContext context, User user)
     {

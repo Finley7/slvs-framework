@@ -1,9 +1,9 @@
 using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
-using SLVS.Authentication.Attribute;
 using SLVS.Database.Repository.User;
 using SLVS.DTO.User;
 using SLVS.Exceptions;
+using SLVS.Security.Attribute.Authentication;
 
 namespace SLVS.Controllers.Security;
 

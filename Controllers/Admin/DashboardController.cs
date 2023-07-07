@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SLVS.Authentication.Attribute;
+using SLVS.Security.Attribute.Authentication;
 
 namespace SLVS.Controllers.Admin;
 
@@ -8,6 +8,7 @@ public class DashboardController : SlvsController
 {
     public IActionResult Index()
     {
+        if (AuthorizationManager.IsAuthorized("test_permission")) Console.WriteLine("Hello world");
         return View();
     }
 }

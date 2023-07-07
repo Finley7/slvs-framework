@@ -3,11 +3,16 @@ using Newtonsoft.Json;
 using SLVS.Database.Model;
 using SLVS.Middleware;
 
-namespace SLVS.Authentication.Manager;
+namespace SLVS.Security.Manager.Authentication;
 
 public class AuthenticationManager : IAuthenticationManager
 {
-    private readonly HttpContext? _context = new HttpContextAccessor().HttpContext;
+    private readonly HttpContext? _context;
+
+    public AuthenticationManager(IHttpContextAccessor httpContextAccessor)
+    {
+        _context = httpContextAccessor.HttpContext;
+    }
 
     public User GetUser()
     {
@@ -45,5 +50,10 @@ public class AuthenticationManager : IAuthenticationManager
     public DateTime? LastLogin()
     {
         return DateTime.Parse(_context?.Session.GetString("LoggedInTime") ?? string.Empty);
+    }
+
+    public bool IsLoggedIn()
+    {
+        return GetUser().Lettercode != "ANON.";
     }
 }

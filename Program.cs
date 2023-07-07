@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SLVS;
-using SLVS.Authentication.Manager;
-using SLVS.Database.Repository.User;
+using SLVS.Database.Repository;
 using SLVS.Middleware;
+using SLVS.Security.Manager.Authentication;
+using SLVS.Security.Manager.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +17,17 @@ builder.Services.AddDbContext<SlvsContext>(optionsBuilder =>
     optionsBuilder.UseMySql(cs, ServerVersion.Parse("5.7.39"))
         .LogTo(Console.WriteLine, LogLevel.Warning);
 });
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddDistributedMemoryCache();
 
+// SLVS Framework Configurations
+
+builder.Services.UseSlvsRepositories();
+
+// Managers
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 
 builder.Services.AddFlashes();
 

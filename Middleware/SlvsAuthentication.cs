@@ -25,7 +25,7 @@ public class SlvsAuthentication
         var endpointFeature = context.Features.Get<IEndpointFeature>();
         var attr = endpointFeature?.Endpoint?.Metadata
             .OfType<Attribute>()
-            .FirstOrDefault(x => x.GetType().Namespace == "SLVS.Authentication.Attribute") as dynamic;
+            .FirstOrDefault(x => x.GetType().Namespace == "SLVS.Security.Attribute.Authentication") as dynamic;
 
         // Call the HandleTask function from the attribute
         attr?.HandleTask(context, user);

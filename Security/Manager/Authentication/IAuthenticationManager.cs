@@ -1,6 +1,6 @@
 using SLVS.Database.Model;
 
-namespace SLVS.Authentication.Manager;
+namespace SLVS.Security.Manager.Authentication;
 
 public interface IAuthenticationManager
 {
@@ -38,4 +38,10 @@ public interface IAuthenticationManager
     /// </summary>
     /// <returns>DateTime object with session creation date</returns>
     public DateTime? LastLogin();
+
+    /// <summary>
+    ///     Checks if the current session is authenticated.
+    /// </summary>
+    /// <returns>Returns whether the user session is filled with an anonymous user or not</returns>
+    public bool IsLoggedIn();
 }
