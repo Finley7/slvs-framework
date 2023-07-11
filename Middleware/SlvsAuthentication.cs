@@ -18,6 +18,7 @@ public class SlvsAuthentication
     public async Task InvokeAsync(HttpContext context)
     {
         // check which user is logged in.
+        
         var userString = context.Session.GetString("User") ?? "";
         var user = JsonConvert.DeserializeObject<User>(userString) ?? new AnonymousUser();
 
@@ -25,13 +26,36 @@ public class SlvsAuthentication
         var endpointFeature = context.Features.Get<IEndpointFeature>();
         var attr = endpointFeature?.Endpoint?.Metadata
             .OfType<Attribute>()
-            .FirstOrDefault(x => x.GetType().Namespace == "SLVS.Security.Attribute.Authentication") as dynamic;
+            .FirstOrDefault(x => x.GetType().Namespace == "SLVS.Security.Attribute.Authentication");
 
-        // Call the HandleTask function from the attribute
-        attr?.HandleTask(context, user);
+        if (attr != null)
+        {
+            bool stop = false;
+
+            switch (attr.ToString())
+            {
+                case "SLVS.Security.Attribute.Authentication.IsLoggedIn":
+                    if (user.GetType() == typeof(AnonymousUser))
+                    {
+                        context.Response.Redirect("/Login");
+                        stop = true;
+                    }
+                    break;
+                case "SLVS.Security.Attribute.Authentication.IsGuest":
+                    if (user.GetType() != typeof(AnonymousUser))
+                    {
+                        context.Response.Redirect("/Dashboard");
+                        stop = true;
+                    }
+                    break;
+            }
+
+            if (stop) return;
+        }
+
         _logger.Log(LogLevel.Information, $"Called attribute {attr?.GetType()} with user {user.Lettercode}");
 
-        // Call the next delegate/middleware in the pipeline.
+        // Call the next delegate/middleware in the pipeline. 
         await _next(context);
     }
 }
