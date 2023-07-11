@@ -12,8 +12,13 @@ public static class RepositoryRegistryManager
             .Select(p => p.AsType());
 
         foreach (var r in repos)
+        {
             if (r.Name != "Repository")
+            {
+                Console.WriteLine($"Loaded repository {r.Name}");
                 service.AddScoped(r.GetInterface($"I{r.Name}") ?? throw new InvalidOperationException(), r);
+            }
+        }
 
         return service;
     }

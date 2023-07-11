@@ -13,7 +13,7 @@ namespace SLVS.Controllers.Security
             AuthenticationManager.DestroyUser();
             Flasher.Success("Je bent succesvol uitgelogd");
 
-            return new RedirectResult("/Login");
+            return new RedirectResult("../Login");
         }
     }
 }

@@ -1,30 +1,24 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:24276",
-      "sslPort": 44388
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5192",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5192"
     },
     "https": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7242;http://localhost:5192",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MAILJET_SECRET": "fd41ad39d710ae64d30ae4aa60b593f5",
+        "MAILJET_CLIENT": "fe218488ad4b47aab8ee0d5ef32d6d55"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7242;http://localhost:5192"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -32,6 +26,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:24276",
+      "sslPort": 44388
     }
   }
 }

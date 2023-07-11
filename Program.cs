@@ -1,9 +1,11 @@
+using Mailjet.Client;
 using Microsoft.EntityFrameworkCore;
 using SLVS;
 using SLVS.Database.Repository;
 using SLVS.Middleware;
 using SLVS.Security.Manager.Authentication;
 using SLVS.Security.Manager.Authorization;
+using SLVS.Service.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +27,17 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.UseSlvsRepositories();
 
+builder.Services.AddHttpClient<IMailjetClient, MailjetClient>(client =>
+{
+    client.SetDefaultSettings();
+    client.UseBasicAuthentication(Environment.GetEnvironmentVariable("MAILJET_CLIENT"), Environment.GetEnvironmentVariable("MAILJET_SECRET"));
+});
+
 // Managers
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
+
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddFlashes();
 
