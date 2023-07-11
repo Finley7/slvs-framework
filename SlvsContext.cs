@@ -22,12 +22,16 @@ public class SlvsContext : DbContext
                 .WithMany(ug => ug.Users);
             entity.HasMany<UserRecoveryToken>(u => u.RecoveryTokens)
                 .WithOne(r => r.User);
+
+            entity.HasData(new User { Id = 1, Lettercode = "SIEFA", Password = BCrypt.Net.BCrypt.HashPassword("test1234"), Email = "finley@siebertmedia.nl" });
         });
 
         modelBuilder.Entity<UserGroup>(entity =>
         {
             entity.HasMany(ug => ug.Permissions)
                 .WithMany(p => p.UserGroups);
+
+            entity.HasData(new UserGroup { Id = 1, Name = "User", Description = "Default user group" });
         });
     }
 }

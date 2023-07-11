@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SLVS;
 
@@ -10,9 +11,11 @@ using SLVS;
 namespace SLVS.Migrations
 {
     [DbContext(typeof(SlvsContext))]
-    partial class SlvsContextModelSnapshot : ModelSnapshot
+    [Migration("20230711185456_UserAndUserGroupSeed")]
+    partial class UserAndUserGroupSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
