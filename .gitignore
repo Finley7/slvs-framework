@@ -350,4 +350,7 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# Tailwind DIST
+wwwroot/css/dist.css
+
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,rider
