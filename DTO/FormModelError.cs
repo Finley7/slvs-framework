@@ -1,10 +1,6 @@
-﻿using System;
-namespace SLVS.DTO
+﻿namespace SLVS.DTO;
+public class FormModelError
 {
-	public class FormModelError
-	{
-		public string Field { get; set; }
-		public List<string> Messages { get; } = new();
-	}
+    public string Field { get; set; }
+    public List<string> Messages { get; } = new();
 }
-

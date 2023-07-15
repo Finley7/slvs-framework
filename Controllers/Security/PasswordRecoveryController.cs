@@ -1,5 +1,6 @@
 using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
+using Razor.Templating.Core;
 using SLVS.Database.Model;
 using SLVS.Database.Repository.User;
 using SLVS.Database.Repository.UserRecoveryToken;
@@ -48,8 +49,8 @@ public class PasswordRecoveryController : SlvsController
             urt.User = user;
 
             _recoveryTokenRepository.Create(urt);
-            await _emailService.SendEmail("f.siebert@vistacollege.nl", "Wachtwoord vergeten",
-                "Wachtwoord vergeten template komt hier.");
+            await _emailService.SendEmail(urt.User.Email, "Wachtwoord vergeten",
+                await RazorTemplateEngine.RenderAsync("../Email/Test", urt));
         }
 
         Flasher.Success("Als de gebruiker bestaat, wordt een e-mail verzonden.");

@@ -26,6 +26,10 @@ public abstract class FormModel
                 var error = errors.First(x => x.Field == p.Name);
                 error.Messages.Add(string.Format(a.ErrorMessage, p.Name));
             }
+
+            // cleanup
+            var field = errors.First(x => x.Field == p.Name);
+            if (field.Messages.Count < 1) errors.Remove(field);
         }
 
 
