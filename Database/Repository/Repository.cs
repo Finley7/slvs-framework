@@ -38,4 +38,9 @@ public class Repository : IRepository
     {
         return Db.Set<T>().Where($"{key} {op} \"{value}\"");
     }
+
+    public T Find<T>(int id) where T : class
+    {
+        return Db.Set<T>().Find(id);
+    }
 }

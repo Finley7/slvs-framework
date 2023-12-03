@@ -1,5 +1,7 @@
+using BCrypt.Net;
 using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Razor.Templating.Core;
 using SLVS.Database.Model;
 using SLVS.Database.Repository.User;
@@ -50,10 +52,51 @@ public class PasswordRecoveryController : SlvsController
 
             _recoveryTokenRepository.Create(urt);
             await _emailService.SendEmail(urt.User.Email, "Wachtwoord vergeten",
-                await RazorTemplateEngine.RenderAsync("../Email/Test", urt));
+                await RazorTemplateEngine.RenderAsync("../Email/Forgot", urt));
         }
 
         Flasher.Success("Als de gebruiker bestaat, wordt een e-mail verzonden.");
+        return new RedirectResult("../Login");
+    }
+
+    public IActionResult Recover(string id)
+    {
+        UserRecoveryToken urt;
+
+        try
+        {
+            urt = _recoveryTokenRepository.FindBy<UserRecoveryToken>("Token", id).Include("User").First();
+        } catch (Exception ex)
+        {
+            Flasher.Danger("This link is invalid!");
+            return new RedirectResult("/PasswordRecovery");
+        }
+
+        return View("../Security/Recover");
+    }
+
+    public RedirectResult PostNewPassword(Recover r)
+    {
+        var errors = r.Validate();
+
+        if(errors.Count > 0)
+        {
+            throw new Exception("Went over HTML validation and errors where found");
+        }
+
+        var urt = _recoveryTokenRepository.FindBy<UserRecoveryToken>("Token", r.Token).Include("User").First();
+
+        if(null == urt)
+        {
+            throw new Exception("URT Not found");
+        }
+
+        var user = urt.User;
+
+        user.Password = BCrypt.Net.BCrypt.HashPassword(r.NewPassword);
+        _userRepository.Update(user);
+
+        Flasher.Success("Your password has been reset. You can login with the new one!");
         return new RedirectResult("../Login");
     }
 }

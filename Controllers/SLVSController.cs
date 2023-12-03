@@ -7,10 +7,10 @@ namespace SLVS.Controllers;
 
 public abstract class SlvsController : Controller
 {
-    protected IAuthenticationManager? AuthenticationManager =>
+    protected IAuthenticationManager AuthenticationManager =>
         HttpContext.RequestServices.GetService<IAuthenticationManager>();
 
-    protected IAuthorizationManager? AuthorizationManager =>
+    protected IAuthorizationManager AuthorizationManager =>
         HttpContext.RequestServices.GetService<IAuthorizationManager>();
 
     protected IFlasher? Flasher => HttpContext.RequestServices.GetService<IFlasher>();

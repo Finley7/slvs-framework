@@ -38,4 +38,12 @@ public interface IRepository
     /// <typeparam name="T">The entity type</typeparam>
     /// <returns></returns>
     public IQueryable<T> FindBy<T>(string key, string value, string op = "=") where T : class;
+
+    /// <summary>
+    /// Find an entity based on their ID
+    /// </summary>
+    /// <typeparam name="T">The entity type</typeparam>
+    /// <param name="id">The ID of the entity in the database</param>
+    /// <returns></returns>
+    public T Find<T>(int id) where T : class;
 }
